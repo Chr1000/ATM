@@ -14,7 +14,14 @@ namespace ATM
         public int Y { get; set; }
         public int Altitude { get; set; }
         public DateTime TimeStamp { get; set; }
-        public double Velocity { get; set; }
         public double Course { get; set; }
+        public double Velocity { get; set; }
+
+        public override string ToString()
+        {
+            string finalstring = "";
+            finalstring = "Tag:" + Tag + " X: " + X.ToString() + " Y: " + Y.ToString() + " Alt: " + Altitude.ToString() + " Time: " + TimeStamp.ToString() + " Vel: " +  Velocity.ToString() ;     
+            return finalstring;
+        }
     }
 }
