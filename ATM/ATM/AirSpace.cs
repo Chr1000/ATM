@@ -7,7 +7,7 @@ using ATM.Interfaces;
 
 namespace ATM
 {
-    class AirSpace : IAirSpace
+    public class AirSpace : IAirSpace
     {
         public int SWCornerX { get; set; }
         public int SWCornerY { get; set; }
