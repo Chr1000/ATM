@@ -19,9 +19,11 @@ namespace ATM
         {
             Console.Clear();
             Console.WriteLine("Transponder Data Stream:");
+            var trackParser = new TrackParser();
             foreach (var rawData in e.TransponderData)
             {
-                Console.WriteLine(rawData);
+                var track = trackParser.ReadTrackData(rawData);
+                Console.WriteLine(track.ToString());
             }
         }
     }
