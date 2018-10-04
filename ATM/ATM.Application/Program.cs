@@ -10,6 +10,7 @@ namespace ATM.Application
     {
         static void Main(string[] args)
         {
+
         }
     }
 }
