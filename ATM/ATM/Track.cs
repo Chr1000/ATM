@@ -17,6 +17,16 @@ namespace ATM
         public double Course { get; set; }
         public double Velocity { get; set; }
 
+        public Track()
+        {
+            X = 0;
+            Y = 0;
+            Altitude = 0;
+            Velocity = 0;
+            Course = 0;
+            TimeStamp = DateTime.MinValue;
+        }
+
         public override string ToString()
         {
             string finalstring = "";
