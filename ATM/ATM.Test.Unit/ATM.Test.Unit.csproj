@@ -50,8 +50,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="TransponderReceiver">
-      <HintPath>..\..\..\Mandatory assignment 2 ATM\TransponderReceiver\TransponderReceiver.dll</HintPath>
+    <Reference Include="TransponderReceiver, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\ATM_Handin_2\ATM\TransponderReceiver.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
