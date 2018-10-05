@@ -40,6 +40,8 @@ namespace ATM.Test.Unit
         [TestCase(9999, 90000, 20000)]
         //Y too low
         [TestCase(10000, 9999, 500)]
+        //X and Y too low
+        [TestCase(9999, 9999, 500)]
         //Y too high
         [TestCase(10000, 90001, 10000)]
         //X too high
