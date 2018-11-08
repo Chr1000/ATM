@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B1989EAC-2B59-428F-A386-C90FA9C78DF8}</ProjectGuid>
+    <ProjectGuid>{B16D36B6-9A33-4CC1-A62C-6379DD7FB3D7}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>ATM.Application</RootNamespace>
-    <AssemblyName>ATM.Application</AssemblyName>
+    <RootNamespace>ATM</RootNamespace>
+    <AssemblyName>ATM</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -45,17 +45,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Airspace.cs" />
+    <Compile Include="Calculator.cs" />
+    <Compile Include="Filter.cs" />
+    <Compile Include="Interfaces\IAirspace.cs" />
+    <Compile Include="Interfaces\ICalculator.cs" />
+    <Compile Include="Interfaces\IFilter.cs" />
+    <Compile Include="Interfaces\IOutput.cs" />
+    <Compile Include="Interfaces\IParser.cs" />
+    <Compile Include="Interfaces\IRender.cs" />
+    <Compile Include="Interfaces\IUpdater.cs" />
+    <Compile Include="Output.cs" />
+    <Compile Include="Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ATM.Core\ATM.Core.csproj">
-      <Project>{1f93cf9a-6b72-406c-83a1-ae901fc7e158}</Project>
-      <Name>ATM.Core</Name>
-    </ProjectReference>
+    <Compile Include="Render.cs" />
+    <Compile Include="Track.cs" />
+    <Compile Include="Updater.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
