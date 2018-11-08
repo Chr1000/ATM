@@ -14,13 +14,13 @@ namespace ATM.Test.Unit
 
     public class AirSpaceUnitTest
     {
-        private ATM.AirSpace _uut;
+        private ATM.Airspace _uut;
         private ATM.Track _t;
 
         [SetUp]
         public void Setup()
         {
-            _uut = new ATM.AirSpace();
+            _uut = new ATM.Airspace();
         }
 
         //Testcases all within our airspace boundaries. 
@@ -32,7 +32,7 @@ namespace ATM.Test.Unit
         {
             _t = new Track() { X = x, Y = y, Altitude = alt };
 
-            NUnit.Framework.Assert.That(_uut.WithinAirSpace(_t), Is.EqualTo(true));
+            NUnit.Framework.Assert.That(_uut.IsTrackInAirspace(_t), Is.EqualTo(true));
 
         }
 
@@ -56,7 +56,7 @@ namespace ATM.Test.Unit
         {
             _t = new Track() { X = x, Y = y, Altitude = alt };
 
-            NUnit.Framework.Assert.That(_uut.WithinAirSpace(_t), Is.EqualTo(false));
+            NUnit.Framework.Assert.That(_uut.IsTrackInAirspace(_t), Is.EqualTo(false));
         }
     }
 }

@@ -64,9 +64,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ATM\ATM.csproj">
-      <Project>{b16d36b6-9a33-4cc1-a62c-6379dd7fb3d7}</Project>
-      <Name>ATM</Name>
+    <ProjectReference Include="..\ATM.Core\ATM.Core.csproj">
+      <Project>{1f93cf9a-6b72-406c-83a1-ae901fc7e158}</Project>
+      <Name>ATM.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

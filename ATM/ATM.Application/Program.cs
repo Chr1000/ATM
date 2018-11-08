@@ -21,7 +21,7 @@ namespace ATM.Application
             var calculator = new Calculator();
             var updater = new Updater(filter, calculator);
             var output = new Output();
-            var sepChecker = new SeperationChecker();
+            var sepChecker = new SeperationChecker(updater);
             var render = new Render(updater, output, sepChecker);
 
             Console.ReadLine();
