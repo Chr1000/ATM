@@ -9,6 +9,22 @@ namespace ATM
 {
     public class Calculator : ICalculator
     {
+        public event EventHandler<CalculatedEventArgs> CalculatedTrack;
+
+        public Calculator()
+        {
+            //updater.TrackStartCal += CalTrack;
+        }
+
+        public void CalTrack(object o, TrackStartCalEventArgs args)
+        {
+            Track track = args.NewTrack;
+            track.Velocity = CalVelocity(args.PrevTrack, args.NewTrack);
+            track.Course = CalCourse(args.PrevTrack, args.NewTrack);
+
+            CalculatedTrack?.Invoke(this, new CalculatedEventArgs(track));
+
+        }
         public double CalVelocity(Track prevTrack, Track newTrack)
         {
             double time = newTrack.TimeStamp.Subtract(prevTrack.TimeStamp).TotalSeconds;

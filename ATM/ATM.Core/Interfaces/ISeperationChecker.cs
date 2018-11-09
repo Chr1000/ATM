@@ -9,9 +9,19 @@ namespace ATM.Core.Interfaces
 {
     public class SeperationAlertEventArgs : EventArgs
     {
-        public Event Event { get; set; }
+        public IEvent Event { get; set; }
 
-        public SeperationAlertEventArgs(Event _event)
+        public SeperationAlertEventArgs(IEvent _event)
+        {
+            Event = _event;
+        }
+    }
+
+    public class SeperationStopEventArgs : EventArgs
+    {
+        public IEvent Event { get; set; }
+
+        public SeperationStopEventArgs(IEvent _event)
         {
             Event = _event;
         }
@@ -20,5 +30,6 @@ namespace ATM.Core.Interfaces
     public interface ISeperationChecker
     {
         event EventHandler<SeperationAlertEventArgs> SeperationAlert;
+        event EventHandler<SeperationStopEventArgs> SeperationStop;
     }
 }

@@ -9,6 +9,8 @@ namespace ATM.Core.Interfaces
     public interface IEvent
     {
         List<IEvent> EventList { get; set; }
+        Track Track { get; }
+        Track ConflictingTrack { get; }
         string Print();
     }
 }

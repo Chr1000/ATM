@@ -57,8 +57,23 @@ namespace ATM.Interfaces
         }
     }
 
+    public class TrackStartCalEventArgs : EventArgs
+    {
+        public Track PrevTrack { get; set; }
+
+        public Track NewTrack { get; set; }
+
+        public TrackStartCalEventArgs(Track prevTrack, Track newTrack)
+        {
+            PrevTrack = prevTrack;
+            NewTrack = newTrack;
+        }
+    }
+
+
     public interface IUpdater
     {
+        event EventHandler<TrackStartCalEventArgs> TrackStartCal; 
         event EventHandler<TracksUpdatedEventArgs> TracksUpdated;
         event EventHandler<SeperationCheckerEventArgs> SeperationChecker;
         event EventHandler<TrackEnteredAirspaceEventArgs> TrackEntered;
