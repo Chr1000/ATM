@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ATM.Core;
+using ATM.Core.Interfaces;
 using ATM.Interfaces;
 
 namespace ATM
@@ -14,17 +15,28 @@ namespace ATM
 
         public event EventHandler<SeperationCheckerEventArgs> SeperationChecker;
 
+        public event EventHandler<TrackEnteredAirspaceEventArgs> TrackEntered;
+
+        public event EventHandler<TrackLeftedAirspaceEventArgs> TrackLefted;
+
         private List<Track> UpdatedTracksList;
-        private List<Event> UpdatedEventsList;
+        private List<IEvent> EventsList;
         private ICalculator _calculator;
 
 
-        public Updater(IFilter filtering, ICalculator calcVelocityCourse)
+        public Updater(IFilter filter, ICalculator calcVelocityCourse)
         {
             UpdatedTracksList = new List<Track>();
+            EventsList = new List<IEvent>();
             _calculator = calcVelocityCourse;
 
-            filtering.TracksFiltered += UpdateTrack;
+            filter.TracksFiltered += UpdateTrack;
+            filter.TrackLeft += TrackLeftedFunc;
+        }
+
+        private void TrackLeftedFunc(object o, TrackLeftAirspaceEventArgs args)
+        {
+            TrackLefted?.Invoke(this, new TrackLeftedAirspaceEventArgs(new Event(EventsList, "Track Left Airspace", args.Track, DateTime.Now)));
         }
 
         private void UpdateTrack(object o, TracksFilteredEventArgs args)
@@ -34,6 +46,7 @@ namespace ATM
                 foreach (var track in args.FilteredTracks)
                 {
                     UpdatedTracksList.Add(track);
+                    TrackEntered?.Invoke(this, new TrackEnteredAirspaceEventArgs(new Event(EventsList, "Track Entered Airspace", track, DateTime.Now)));
                 }
             }
 
@@ -42,12 +55,12 @@ namespace ATM
                 foreach (var filteredTrack in args.FilteredTracks)
                 {
                     var updatedTrack = UpdatedTracksList.Find(i => i.Tag == filteredTrack.Tag);
+
                     if (updatedTrack == null)
                     {
                         UpdatedTracksList.Add(filteredTrack);
-                        //Kald “Track Entered Airspace” event her
+                        TrackEntered?.Invoke(this, new TrackEnteredAirspaceEventArgs(new Event(EventsList , "Track Entered Airspace", filteredTrack, DateTime.Now)));
                     }
-
                     else
                     {
                         filteredTrack.Course = _calculator.CalCourse(UpdatedTracksList[UpdatedTracksList.IndexOf(updatedTrack)],
@@ -56,13 +69,13 @@ namespace ATM
                             _calculator.CalVelocity(UpdatedTracksList[UpdatedTracksList.IndexOf(updatedTrack)], filteredTrack);
                         UpdatedTracksList[UpdatedTracksList.IndexOf(updatedTrack)] = filteredTrack;
 
-                        SeperationChecker?.Invoke(this, new SeperationCheckerEventArgs(UpdatedTracksList, filteredTrack ));
+                        SeperationChecker?.Invoke(this, new SeperationCheckerEventArgs(EventsList, UpdatedTracksList, filteredTrack ));
                     }
                 }
             }
 
             var handler = TracksUpdated;
-            handler?.Invoke(this, new TracksUpdatedEventArgs(UpdatedTracksList));
+            handler?.Invoke(this, new TracksUpdatedEventArgs(UpdatedTracksList, EventsList));
         }
     }
 }

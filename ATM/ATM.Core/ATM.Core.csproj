@@ -47,6 +47,7 @@
     <Compile Include="Calculator.cs" />
     <Compile Include="Event.cs" />
     <Compile Include="Filter.cs" />
+    <Compile Include="Interfaces\IEvent.cs" />
     <Compile Include="Interfaces\ILogger.cs" />
     <Compile Include="Interfaces\IAirspace.cs" />
     <Compile Include="Interfaces\ICalculator.cs" />

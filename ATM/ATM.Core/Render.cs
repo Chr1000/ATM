@@ -11,34 +11,53 @@ namespace ATM
     public class Render : IRender
     {
         private IOutput _output;
-        private List<string> AlertList;
-        public Render(IUpdater trackUpdate, IOutput output, ISeperationChecker checker)
+        
+        public Render(IUpdater updater, IOutput output, ISeperationChecker checker)
         {
-            AlertList = new List<string>();
             _output = output;
-            trackUpdate.TracksUpdated += RenderTracks;
-            checker.SeperationAlert += RaisSeperationAlert;
+            updater.TracksUpdated += RenderTracks;
+            //checker.SeperationAlert += RaisSeperationAlert;
+            updater.TrackEntered += RaiseTrackEnteredEvent;
+            updater.TrackLefted += RaiseTrackLeftedEvent;
 
         }
 
         private void RenderTracks(object o, TracksUpdatedEventArgs args)
         {
             _output.Clear();
-            foreach (var alerts in AlertList)
+            _output.WriteLine("---------------------------------------------------EVENTS--------------------------------------------------");
+            if (args.EventsList.Count > 0)
             {
-                _output.WriteLine(alerts);
+                foreach (var events in args.EventsList)
+                {
+                    _output.WriteLine("                          " + events.Print());
+                }
             }
+            for (int i = 0; i < 10 - args.EventsList.Count; i++)
+            {
+                _output.WriteLine("");
+            }
+            _output.WriteLine("---------------------------------------------------TRACKS--------------------------------------------------");
             foreach (var track in args.UpdatedTracks)
             {
                 RenderTrack(track);
             }
         }
 
-        private void RaisSeperationAlert(object o, SeperationAlertEventArgs args)
+        //private void RaisSeperationAlert(object o, SeperationAlertEventArgs args)
+        //{
+        //    string seperationEvent = "SEPERATION EVENT! " + args.ConflictingTrack1.Tag + " and " + args.ConflictingTrack2.Tag + " are conflicting. " + DateTime.Now.ToString("h:mm:ss tt");
+        //    EventList.Add(seperationEvent);
+        //}
+
+        private void RaiseTrackEnteredEvent(object o, TrackEnteredAirspaceEventArgs args)
         {
-            DateTime data = new DateTime();
-            string alert = "SEPERATION EVENT! " + args.ConflictingTrack1.Tag + " and " + args.ConflictingTrack2.Tag + " are conflicting. " + data;
-            AlertList.Add(alert);
+
+        }
+
+        private void RaiseTrackLeftedEvent(object o, TrackLeftedAirspaceEventArgs args)
+        {
+
         }
 
         public void RenderTrack(Track track)

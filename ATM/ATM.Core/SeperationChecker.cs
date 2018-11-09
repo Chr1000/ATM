@@ -23,12 +23,12 @@ namespace ATM.Core
                 if (args.Track.Tag == updatedTrack.Tag)
                 {
                 }
-                else if ((Math.Abs(args.Track.Altitude - updatedTrack.Altitude) <= 300 &&
-                         (args.Track.X + 5000 >= updatedTrack.X && args.Track.X - 5000 <= updatedTrack.X) &&
+                /*else if ((Math.Abs(args.Track.Altitude - updatedTrack.Altitude) >= 300 ||
+                         (args.Track.X + 5000 <= updatedTrack.X && args.Track.X - 5000 <= updatedTrack.X) &&
                          (args.Track.Y + 5000 >= updatedTrack.Y && args.Track.Y - 5000 <= updatedTrack.Y)))
                 {
-                    SeperationAlert?.Invoke(this, new SeperationAlertEventArgs(args.Track, updatedTrack));
-                }
+                    SeperationAlert?.Invoke(this, new SeperationAlertEventArgs(args.EventList , args.Track, updatedTrack));
+                }*/
             }
         }
     }

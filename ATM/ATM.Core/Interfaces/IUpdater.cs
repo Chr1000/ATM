@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ATM.Core;
+using ATM.Core.Interfaces;
 
 namespace ATM.Interfaces
 {
@@ -11,24 +12,48 @@ namespace ATM.Interfaces
     {
         public List<Track> UpdatedTracks { get; set; }
 
-        public List<Event> EventsList { get; set; }
+        public List<IEvent> EventsList { get; set; }
 
-        public TracksUpdatedEventArgs(List<Track> updatedTracks)
+        public TracksUpdatedEventArgs(List<Track> updatedTracks, List<IEvent> eventsList)
         {
             UpdatedTracks = updatedTracks;
+            EventsList = eventsList;
         }
     }
 
     public class SeperationCheckerEventArgs : EventArgs
     {
+        public List<IEvent> EventList { get; set; }
+
         public List<Track> UpdatedTracks { get; set; }
 
         public Track Track { get; set; }
 
-        public SeperationCheckerEventArgs(List<Track> updatedTracks, Track track)
+        public SeperationCheckerEventArgs(List<IEvent> eventList, List<Track> updatedTracks, Track track)
         {
+            EventList = eventList;
             UpdatedTracks = updatedTracks;
             Track = track;
+        }
+    }
+
+    public class TrackEnteredAirspaceEventArgs : EventArgs
+    {
+        public IEvent Event { get; set; }
+
+        public TrackEnteredAirspaceEventArgs(IEvent _event)
+        {
+            Event = _event;
+        }
+    }
+
+    public class TrackLeftedAirspaceEventArgs : EventArgs
+    {
+        public IEvent Event { get; set; }
+
+        public TrackLeftedAirspaceEventArgs(IEvent _event)
+        {
+            Event = _event;
         }
     }
 
@@ -36,5 +61,7 @@ namespace ATM.Interfaces
     {
         event EventHandler<TracksUpdatedEventArgs> TracksUpdated;
         event EventHandler<SeperationCheckerEventArgs> SeperationChecker;
+        event EventHandler<TrackEnteredAirspaceEventArgs> TrackEntered;
+        event EventHandler<TrackLeftedAirspaceEventArgs> TrackLefted;
     }
 }

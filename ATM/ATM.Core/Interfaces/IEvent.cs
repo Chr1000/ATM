@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace ATM.Core.Interfaces
 {
-    public interface ILogger
+    public interface IEvent
     {
-
+        List<IEvent> EventList { get; set; }
+        string Print();
     }
 }

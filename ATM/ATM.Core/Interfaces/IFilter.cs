@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ATM.Core;
 
 namespace ATM.Interfaces
 {
@@ -16,8 +17,19 @@ namespace ATM.Interfaces
         }
     }
 
+    public class TrackLeftAirspaceEventArgs : EventArgs
+    {
+        public Track Track { get; set; }
+
+        public TrackLeftAirspaceEventArgs(Track track)
+        {
+            Track = track;
+        }
+    }
+
     public interface IFilter
     {
         event EventHandler<TracksFilteredEventArgs> TracksFiltered;
+        event EventHandler<TrackLeftAirspaceEventArgs> TrackLeft;
     }
 }

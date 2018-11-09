@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ATM.Core;
 using ATM.Interfaces;
 
 namespace ATM
@@ -10,6 +11,10 @@ namespace ATM
     public class Filter : IFilter
     {
         public event EventHandler<TracksFilteredEventArgs> TracksFiltered;
+
+        public event EventHandler<TrackLeftAirspaceEventArgs> TrackLeft;
+
+
         public List<Track> FilteredTracksList;
         private IAirspace _airspace;
 
@@ -36,12 +41,12 @@ namespace ATM
                         if (track.Tag == trackInFilList.Tag)
                         {
                             //Kald “Track Left Airspace”- event her
+                            TrackLeft?.Invoke(this, new TrackLeftAirspaceEventArgs(track));
                         }
                     }
                 }
             }
-            var handler = TracksFiltered;
-            handler?.Invoke(this, new TracksFilteredEventArgs(FilteredTracksList));
+            TracksFiltered?.Invoke(this, new TracksFilteredEventArgs(FilteredTracksList));
         }
     }
 }
