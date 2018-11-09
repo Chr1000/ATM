@@ -9,16 +9,11 @@ namespace ATM.Core.Interfaces
 {
     public class SeperationAlertEventArgs : EventArgs
     {
-        public List<IEvent> EventList { get; set; }
-        public Track ConflictingTrack1 { get; set; }
+        public Event Event { get; set; }
 
-        public Track ConflictingTrack2 { get; set; }
-
-        public SeperationAlertEventArgs(List<IEvent> eventList, Track track1, Track track2)
+        public SeperationAlertEventArgs(Event _event)
         {
-            EventList = eventList;
-            ConflictingTrack1 = track1;
-            ConflictingTrack2 = track2;
+            Event = _event;
         }
     }
 

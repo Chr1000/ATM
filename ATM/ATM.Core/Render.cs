@@ -19,6 +19,7 @@ namespace ATM
             //checker.SeperationAlert += RaisSeperationAlert;
             updater.TrackEntered += RaiseTrackEnteredEvent;
             updater.TrackLefted += RaiseTrackLeftedEvent;
+            checker.SeperationAlert += RaiseSeperationAlertEvent;
 
         }
 
@@ -56,6 +57,11 @@ namespace ATM
         }
 
         private void RaiseTrackLeftedEvent(object o, TrackLeftedAirspaceEventArgs args)
+        {
+
+        }
+
+        private void RaiseSeperationAlertEvent(object o, SeperationAlertEventArgs args)
         {
 
         }

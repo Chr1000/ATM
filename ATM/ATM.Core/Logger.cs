@@ -13,29 +13,26 @@ namespace ATM.Core
     public class Logger : ILogger
     {
 
-        public Logger(IUpdater updater)
+        public Logger(IUpdater updater, ISeperationChecker checker)
         {
             updater.TrackEntered += logEnteredEvent;
             updater.TrackLefted += logLeftedEvent;
+            checker.SeperationAlert += logSeperationEvent;
         }
 
         private void logEnteredEvent(object o, TrackEnteredAirspaceEventArgs args)
         {
-            
-                Log(args.Event);
-            
+             Log(args.Event);
         }
 
         private void logLeftedEvent(object o, TrackLeftedAirspaceEventArgs args)
         {
-            
-                Log(args.Event);
-            
+             Log(args.Event);
         }
 
-        private void logSeperationEvent(object o, TracksChangedEventArgs args)
+        private void logSeperationEvent(object o, SeperationAlertEventArgs args)
         {
-
+            Log(args.Event);
         }
 
         private static void Log(IEvent _event)

@@ -23,7 +23,7 @@ namespace ATM.Application
             var output = new Output();
             var sepChecker = new SeperationChecker(updater);
             var render = new Render(updater, output, sepChecker);
-            var logger = new Logger(updater);
+            var logger = new Logger(updater, sepChecker);
 
             Console.ReadLine();
         }

@@ -23,16 +23,16 @@ namespace ATM.Interfaces
 
     public class SeperationCheckerEventArgs : EventArgs
     {
-        public List<IEvent> EventList { get; set; }
+        public Track Track { get; set; }
 
         public List<Track> UpdatedTracks { get; set; }
 
-        public Track Track { get; set; }
+        public List<IEvent> EventList { get; set; }
 
-        public SeperationCheckerEventArgs(List<IEvent> eventList, List<Track> updatedTracks, Track track)
+        public SeperationCheckerEventArgs(List<IEvent> eventList, List<Track> updatedTrackList, Track track)
         {
             EventList = eventList;
-            UpdatedTracks = updatedTracks;
+            UpdatedTracks = updatedTrackList;
             Track = track;
         }
     }

@@ -20,15 +20,37 @@ namespace ATM.Core
         {
             foreach (var updatedTrack in args.UpdatedTracks)
             {
-                if (args.Track.Tag == updatedTrack.Tag)
+                if (CheckForSeparation(args.Track , updatedTrack))
                 {
+                    SeperationAlert?.Invoke(this, new SeperationAlertEventArgs(new Event(args.EventList, "SEPERATION ALERT", args.Track, DateTime.Now, updatedTrack )));
                 }
-                /*else if ((Math.Abs(args.Track.Altitude - updatedTrack.Altitude) >= 300 ||
-                         (args.Track.X + 5000 <= updatedTrack.X && args.Track.X - 5000 <= updatedTrack.X) &&
-                         (args.Track.Y + 5000 >= updatedTrack.Y && args.Track.Y - 5000 <= updatedTrack.Y)))
+            }
+
+            bool CheckForSeparation(Track t1, Track t2)
+            {
+
+                int _altDiff = Math.Abs(t1.Altitude - t2.Altitude);
+
+                if (_altDiff <= 300)
                 {
-                    SeperationAlert?.Invoke(this, new SeperationAlertEventArgs(args.EventList , args.Track, updatedTrack));
-                }*/
+
+                    int _xDiff = t1.X - t2.X;
+                    int _yDiff = t1.Y - t2.Y;
+                    int _horizontalDist = Convert.ToInt32(System.Math.Floor(Math.Sqrt(Math.Pow(_xDiff, 2) + Math.Pow(_yDiff, 2))));
+
+                    if (_horizontalDist < 5000)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
     }
