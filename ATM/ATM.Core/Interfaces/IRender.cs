@@ -8,6 +8,5 @@ namespace ATM.Interfaces
 {
     public interface IRender
     {
-        void RenderTrack(Track track);
     }
 }

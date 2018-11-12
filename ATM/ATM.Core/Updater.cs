@@ -55,7 +55,14 @@ namespace ATM
 
         private void TrackLeftedFunc(object o, TrackLeftAirspaceEventArgs args)
         {
+            var trackToRemove = UpdatedTracksList.Find(i => i.Tag == args.Track.Tag);
+            if (trackToRemove == null)
+            {
+                return;
+            }
+            UpdatedTracksList.Remove(trackToRemove);
             TrackLefted?.Invoke(this, new TrackLeftedAirspaceEventArgs(new Event(EventsList, "Track Left Airspace", args.Track, DateTime.Now)));
+            TracksUpdated?.Invoke(this, new TracksUpdatedEventArgs(UpdatedTracksList, EventsList));
         }
 
         private void EvalTrack(object o, TracksFilteredEventArgs args)

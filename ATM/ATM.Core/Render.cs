@@ -31,6 +31,10 @@ namespace ATM
             {
                 foreach (var events in args.EventsList)
                 {
+                    if (events == null)
+                    {
+                        break;
+                    }
                     _output.WriteLine("                          " + events.Print());
                 }
             }
@@ -66,7 +70,7 @@ namespace ATM
 
         }
 
-        public void RenderTrack(Track track)
+        private void RenderTrack(Track track)
         {
             _output.WriteLine("Tag: " + track.Tag + ", X: " + track.X + ", Y: " + track.Y + ", Altitude: " + track.Altitude + ", Velocity: " + track.Velocity + ", Course: " + track.Course);
         }

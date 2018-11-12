@@ -28,25 +28,30 @@ namespace ATM
 
         public void FilterTrack(object o, TracksChangedEventArgs args)
         {
+            List<Track> newFilteredTracks = new List<Track>();
             foreach (var track in args.Tracks)
             {
                 if (_airspace.IsTrackInAirspace(track))
                 {
                     FilteredTracksList.Add(track);
+                    newFilteredTracks.Add(track);
                 }
                 else
                 {
+                    
                     foreach (var trackInFilList in FilteredTracksList )
                     {
                         if (track.Tag == trackInFilList.Tag)
                         {
                             //Kald “Track Left Airspace”- event her
+                            //FilteredTracksList.Remove(trackInFilList);
                             TrackLeft?.Invoke(this, new TrackLeftAirspaceEventArgs(track));
+                            break;
                         }
                     }
                 }
             }
-            TracksFiltered?.Invoke(this, new TracksFilteredEventArgs(FilteredTracksList));
+            TracksFiltered?.Invoke(this, new TracksFilteredEventArgs(newFilteredTracks));
         }
     }
 }

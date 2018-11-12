@@ -11,6 +11,11 @@ namespace ATM
 {
     public class Parser : IParser
     {
+        //TEST
+        private int count = -70;
+        private int F1x = 20000;
+        private int F1y = 10050;
+
         public event EventHandler<TracksChangedEventArgs> TracksChanged;
         private List<Track> tracks;
 
@@ -20,6 +25,8 @@ namespace ATM
             tracks = new List<Track>();
 
             transponderReceiver.TransponderDataReady += UpdateTrack;
+
+            
         }
 
         private void UpdateTrack(object o, RawTransponderDataEventArgs args)
@@ -31,10 +38,16 @@ namespace ATM
                 tracks.Add(track);
             }
 
+            if (count >= 1 && count <= 27)
+            {
+                tracks.Add(ReadTrackData("NIC666;" + F1x + ";"+ (F1y - 2*count) + ";" + 5000 +";20181004123456789"));
+            }
+        
+            count = count + 1;
+
             if (tracks.Count != 0)
             {
-                var handler = TracksChanged;
-                handler?.Invoke(this, new TracksChangedEventArgs(tracks));
+                TracksChanged?.Invoke(this, new TracksChangedEventArgs(tracks));
             }
         }
 
