@@ -101,6 +101,7 @@ namespace ATM
                     }
                 }
             }
+            args.UpdatedTracks = UpdatedTracksList;
             TracksUpdated?.Invoke(this, new TracksUpdatedEventArgs(UpdatedTracksList, EventsList));
         }
     }

@@ -11,6 +11,8 @@ namespace ATM.Interfaces
     {
         public List<Track> FilteredTracks { get; set; }
 
+        public List<Track> UpdatedTracks { get; set; }
+
         public TracksFilteredEventArgs(List<Track> filteredTracks)
         {
             FilteredTracks = filteredTracks;
