@@ -96,6 +96,8 @@ namespace ATM
                         filteredTrack.Velocity =
                             _calculator.CalVelocity(UpdatedTracksList[UpdatedTracksList.IndexOf(updatedTrack)], filteredTrack);
                         UpdatedTracksList[UpdatedTracksList.IndexOf(updatedTrack)] = filteredTrack;
+
+                        SeperationChecker?.Invoke(this, new SeperationCheckerEventArgs(EventsList, UpdatedTracksList, filteredTrack));
                     }
                 }
             }

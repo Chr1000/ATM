@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Xml.Serialization;
 using ATM.Core.Interfaces;
 using ATM.Interfaces;
 
@@ -40,7 +41,7 @@ namespace ATM.Core
             }
             else
             {
-                checker.SeperationStop += DeleteThisEvent;
+                checker.SeperationStop += DeleteThisIfSeperationEvent;
             }
 
         }
@@ -48,6 +49,15 @@ namespace ATM.Core
         private void DeleteThisEvent(object sender, EventArgs e)
         {
             EventList.Remove(this);
+        }
+
+        private void DeleteThisIfSeperationEvent(object o, SeperationStopEventArgs args)
+        {
+            if (args.Event == this)
+            {
+                EventList.Remove(this);
+            }
+            
         }
 
         public string Print()

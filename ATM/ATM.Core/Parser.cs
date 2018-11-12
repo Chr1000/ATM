@@ -13,8 +13,8 @@ namespace ATM
     {
         //TEST
         private int count = -70;
-        private int F1x = 20000;
-        private int F1y = 10050;
+        private int Fx = 20000;
+        private int Fy = 10050;
 
         public event EventHandler<TracksChangedEventArgs> TracksChanged;
         private List<Track> tracks;
@@ -40,7 +40,22 @@ namespace ATM
 
             if (count >= 1 && count <= 27)
             {
-                tracks.Add(ReadTrackData("NIC666;" + F1x + ";"+ (F1y - 2*count) + ";" + 5000 +";20181004123456789"));
+                tracks.Add(ReadTrackData("NIC666;" + 20000 + ";"+ (10050 - 2*count) + ";" + 5000 +";20181004123456789"));
+            }
+
+            if (count >= -10)
+            {
+                tracks.Add(ReadTrackData("CHR112;" + (30000 + 2 * count) + ";" + (20000 + 2 * count) + ";" + 10000 + ";20181004123456789"));
+            }
+
+            if (count >= 10 && count <= 30)
+            {
+                tracks.Add(ReadTrackData("MOR007;" + 30000 + ";" + (25200 - 10 * count) + ";" + 10000 + ";20181004123456789"));
+            }
+
+            if (count > 30)
+            {
+                tracks.Add(ReadTrackData("MOR007;" + (30000 - 10*(count - 30)) + ";" + (24900 + (count-30)*5) + ";" + 10000 + ";20181004123456789"));
             }
         
             count = count + 1;

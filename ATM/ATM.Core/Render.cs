@@ -26,7 +26,16 @@ namespace ATM
         private void RenderTracks(object o, TracksUpdatedEventArgs args)
         {
             _output.Clear();
-            _output.WriteLine("---------------------------------------------------EVENTS--------------------------------------------------");
+            _output.WriteLine("---------------------------------------------------------TRACKS--------------------------------------------------------");
+            foreach (var track in args.UpdatedTracks)
+            {
+                RenderTrack(track);
+            }
+            for (int i = 0; i < 10 - args.UpdatedTracks.Count; i++)
+            {
+                _output.WriteLine("");
+            }
+            _output.WriteLine("---------------------------------------------------------EVENTS--------------------------------------------------------");
             if (args.EventsList.Count > 0)
             {
                 foreach (var events in args.EventsList)
@@ -42,11 +51,7 @@ namespace ATM
             {
                 _output.WriteLine("");
             }
-            _output.WriteLine("---------------------------------------------------TRACKS--------------------------------------------------");
-            foreach (var track in args.UpdatedTracks)
-            {
-                RenderTrack(track);
-            }
+            _output.WriteLine(DateTime.Now.ToString("dd-MMM-yyyy - HH':'mm") + " ---------------------------- FLIGHTS in airspace " + args.UpdatedTracks.Count +" ------------------------------------------------");
         }
 
         //private void RaisSeperationAlert(object o, SeperationAlertEventArgs args)

@@ -25,28 +25,47 @@ namespace ATM.Core
 
         private void CheckSeperation(object o, SeperationCheckerEventArgs args)
         {
+            IEvent eventFound1 = SeperationAlertList.Find(i => i.Track.Tag == args.Track.Tag);
+            IEvent eventFound2 = SeperationAlertList.Find(i => i.ConflictingTrack.Tag == args.Track.Tag);
             foreach (var updatedTrack in args.UpdatedTracks)
-            {
-                Track track = SeperationAlertList.Find(i => i.Track.Tag == updatedTrack.Tag).Track;
-                Track conflictingTrack = SeperationAlertList.Find(i => i.ConflictingTrack.Tag == updatedTrack.Tag).ConflictingTrack;
+            {   
                 if (args.Track.Tag != updatedTrack.Tag)
                 {
-                    if(CheckForSeparation(args.Track, updatedTrack) && track == null && conflictingTrack == null)
+                    if(CheckForSeparation(args.Track, updatedTrack))
                     {
-                        //Event is getting a SeperationChecker object, this, and by this it can make an event to SeperationStop.
-                        IEvent alertEvent = new Event(args.EventList, "SEPERATION ALERT", args.Track, DateTime.Now, updatedTrack, this);
-                        SeperationAlertList.Add(alertEvent);
-                        SeperationAlert?.Invoke(this, new SeperationAlertEventArgs(alertEvent));
-                    }
-                    else if(SeperationAlertList.Count > 0)
-                    {
-                        foreach (var events in SeperationAlertList)
+                        if (eventFound1 == null && eventFound2 == null)
                         {
-                            if (args.Track.Tag == events.Track.Tag || args.Track.Tag == events.ConflictingTrack.Tag)
-                            {
-                                SeperationStop?.Invoke(this, new SeperationStopEventArgs(events));
-                            }
+                            //Event is getting a SeperationChecker object, this, and by this it can make an event to SeperationStop.
+                            IEvent alertEvent = new Event(args.EventList, "SEPERATION ALERT", args.Track, DateTime.Now, updatedTrack, this);
+                            SeperationAlertList.Add(alertEvent);
+                            SeperationAlert?.Invoke(this, new SeperationAlertEventArgs(alertEvent));
                         }
+                    }
+                    else if(eventFound1 != null || eventFound2 != null)
+                    {
+                        if (eventFound1 != null)
+                        {
+                            if (updatedTrack.Tag == eventFound1.ConflictingTrack.Tag)
+                            {
+                                SeperationStop?.Invoke(this, new SeperationStopEventArgs(eventFound1));
+                                SeperationAlertList.Remove(eventFound1);
+                            }
+                            
+                        }
+                        else if (updatedTrack.Tag == eventFound2.Track.Tag)
+                        {
+                            SeperationStop?.Invoke(this, new SeperationStopEventArgs(eventFound2));
+                            SeperationAlertList.Remove(eventFound2);
+                        }
+                        
+
+                        //foreach (var events in SeperationAlertList)
+                        //{
+                        //    if (args.Track.Tag == events.Track.Tag || args.Track.Tag == events.ConflictingTrack.Tag)
+                        //    {
+                        //        SeperationStop?.Invoke(this, new SeperationStopEventArgs(events));
+                        //    }
+                        //}
                     }
                 }
             }
@@ -58,8 +77,8 @@ namespace ATM.Core
                 if (_altDiff <= 300)
                 {
 
-                    int _xDiff = t1.X - t2.X;
-                    int _yDiff = t1.Y - t2.Y;
+                    int _xDiff = Math.Abs(t1.X - t2.X);
+                    int _yDiff = Math.Abs(t1.Y - t2.Y);
                     int _horizontalDist = Convert.ToInt32(Math.Sqrt(Math.Pow(_xDiff, 2) + Math.Pow(_yDiff, 2)));
 
                     if (_horizontalDist < 5000)
