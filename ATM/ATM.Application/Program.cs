@@ -15,8 +15,8 @@ namespace ATM.Application
         static void Main(string[] args)
         {
             var transponderReceiver = TransponderReceiverFactory.CreateTransponderDataReceiver();
-            var transponderdataReader = new Parser(transponderReceiver);
-            var filter = new Filter(transponderdataReader);
+            var parser = new Parser(transponderReceiver);
+            var filter = new Filter(parser);
             var airspace = new Airspace(filter);
             var updater = new Updater(filter);
             var calculator = new Calculator(updater);
