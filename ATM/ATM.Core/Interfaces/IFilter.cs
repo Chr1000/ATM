@@ -29,8 +29,21 @@ namespace ATM.Interfaces
         }
     }
 
+    public class IsTrackInAirspaceEventArgs : EventArgs
+    {
+        public Track Track { get; set; }
+
+        public bool IsInAirspace { get; set; }
+
+        public IsTrackInAirspaceEventArgs (Track track)
+        {
+            Track = track;
+        }
+    }
+
     public interface IFilter
     {
+        event EventHandler<IsTrackInAirspaceEventArgs> IsTrackInAirspace;
         event EventHandler<TracksFilteredEventArgs> TracksFiltered;
         event EventHandler<TrackLeftAirspaceEventArgs> TrackLeft;
     }

@@ -8,7 +8,5 @@ namespace ATM.Interfaces
 {
     public interface IOutput
     {
-        void WriteLine(string line);
-        void Clear();
     }
 }

@@ -16,7 +16,7 @@ namespace ATM
         public int lowerAlt { get; set; }
         public int upperAlt { get; set; }
 
-        public Airspace()
+        public Airspace(Filter filter)
         {
             SWCornerY = 10000;
             SWCornerX = 10000;
@@ -24,17 +24,22 @@ namespace ATM
             NECornerY = 90000;
             lowerAlt = 500;
             upperAlt = 20000;
+
+            filter.IsTrackInAirspace += IsTrackInAirspace;
         }
 
-        public bool IsTrackInAirspace(Track track)
+        private void IsTrackInAirspace(object o, IsTrackInAirspaceEventArgs args)
         {
-            if (track.X >= SWCornerX && track.X <= NECornerX &&
-                track.Y >= SWCornerY && track.Y <= NECornerY &&
-                track.Altitude >= lowerAlt && track.Altitude <= upperAlt)
+            if (args.Track.X >= SWCornerX && args.Track.X <= NECornerX &&
+                args.Track.Y >= SWCornerY && args.Track.Y <= NECornerY &&
+                args.Track.Altitude >= lowerAlt && args.Track.Altitude <= upperAlt)
             {
-                return true;
+                args.IsInAirspace = true;
             }
-            return false;
+            else
+            {
+                args.IsInAirspace = false;
+            }
         }
     }
 }

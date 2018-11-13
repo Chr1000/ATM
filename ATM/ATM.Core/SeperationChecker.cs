@@ -57,15 +57,7 @@ namespace ATM.Core
                             SeperationStop?.Invoke(this, new SeperationStopEventArgs(eventFound2));
                             SeperationAlertList.Remove(eventFound2);
                         }
-                        
-
-                        //foreach (var events in SeperationAlertList)
-                        //{
-                        //    if (args.Track.Tag == events.Track.Tag || args.Track.Tag == events.ConflictingTrack.Tag)
-                        //    {
-                        //        SeperationStop?.Invoke(this, new SeperationStopEventArgs(events));
-                        //    }
-                        //}
+                       
                     }
                 }
             }

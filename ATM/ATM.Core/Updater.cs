@@ -28,29 +28,13 @@ namespace ATM
         private ICalculator _calculator;
 
 
-        public Updater(IFilter filter, ICalculator calculator)
+        public Updater(IFilter filter)
         {
             UpdatedTracksList = new List<Track>();
             EventsList = new List<IEvent>();
 
-            _calculator = calculator;
-            calculator.CalculatedTrack += UpdatedTrack;
-
             filter.TracksFiltered += EvalTrack;
             filter.TrackLeft += TrackLeftedFunc;
-        }
-
-        private void UpdatedTrack(object o, CalculatedEventArgs args)
-        {
-            var updatedTrack = UpdatedTracksList.Find(i => i.Tag == args.Track.Tag);
-
-            if (updatedTrack == null)
-            {
-                return;
-            }
-            UpdatedTracksList[UpdatedTracksList.IndexOf(updatedTrack)] = args.Track;
-
-            SeperationChecker?.Invoke(this, new SeperationCheckerEventArgs(EventsList, UpdatedTracksList, args.Track));
         }
 
         private void TrackLeftedFunc(object o, TrackLeftAirspaceEventArgs args)
@@ -89,12 +73,12 @@ namespace ATM
                     }
                     else
                     {
-                        //TrackStartCal?.Invoke(this, new TrackStartCalEventArgs(UpdatedTracksList[UpdatedTracksList.IndexOf(updatedTrack)],
-                        //    filteredTrack));
-                        filteredTrack.Course = _calculator.CalCourse(UpdatedTracksList[UpdatedTracksList.IndexOf(updatedTrack)],
-                            filteredTrack) ;
-                        filteredTrack.Velocity =
-                            _calculator.CalVelocity(UpdatedTracksList[UpdatedTracksList.IndexOf(updatedTrack)], filteredTrack);
+                        var newCalEvent = new TrackStartCalEventArgs(
+                            UpdatedTracksList[UpdatedTracksList.IndexOf(updatedTrack)],
+                            filteredTrack);
+                        TrackStartCal?.Invoke(this, newCalEvent);
+                        filteredTrack.Course = newCalEvent.CalculatedTrack.Course;
+                        filteredTrack.Velocity = newCalEvent.CalculatedTrack.Velocity;
                         UpdatedTracksList[UpdatedTracksList.IndexOf(updatedTrack)] = filteredTrack;
 
                         SeperationChecker?.Invoke(this, new SeperationCheckerEventArgs(EventsList, UpdatedTracksList, filteredTrack));

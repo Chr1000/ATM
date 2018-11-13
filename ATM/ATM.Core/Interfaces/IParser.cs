@@ -17,7 +17,6 @@ namespace ATM.Interfaces
     }
     public interface IParser
     {
-        Track ReadTrackData(string trackData);
         event EventHandler<TracksChangedEventArgs> TracksChanged;
     }
 }

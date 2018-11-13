@@ -16,13 +16,13 @@ namespace ATM.Application
         {
             var transponderReceiver = TransponderReceiverFactory.CreateTransponderDataReceiver();
             var transponderdataReader = new Parser(transponderReceiver);
-            var airspace = new Airspace();
-            var filter = new Filter(airspace, transponderdataReader);
-            var calculator = new Calculator();
-            var updater = new Updater(filter, calculator);
-            var output = new Output();
+            var filter = new Filter(transponderdataReader);
+            var airspace = new Airspace(filter);
+            var updater = new Updater(filter);
+            var calculator = new Calculator(updater);
             var sepChecker = new SeperationChecker(updater);
-            var render = new Render(updater, output, sepChecker);
+            var render = new Render(updater);
+            var output = new Output(render);
             var logger = new Logger(updater, sepChecker);
 
             Console.ReadLine();

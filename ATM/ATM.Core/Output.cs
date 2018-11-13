@@ -9,12 +9,18 @@ namespace ATM
 {
     public class Output : IOutput
     {
-        public void WriteLine(string line)
+        public Output(IRender render)
         {
-            Console.WriteLine(line);
+            render.WriteLine += WriteLine;
+            render.Clear += Clear;
         }
 
-        public void Clear()
+        private void WriteLine(object o, WriteLineEventArgs args)
+        {
+            Console.WriteLine(args.Output);
+        }
+
+        private void Clear(object o, EventArgs args)
         {
             Console.Clear();
         }

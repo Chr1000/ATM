@@ -14,14 +14,14 @@ namespace ATM
 
         public event EventHandler<TrackLeftAirspaceEventArgs> TrackLeft;
 
+        public event EventHandler<IsTrackInAirspaceEventArgs> IsTrackInAirspace;
+
 
         public List<Track> UpdatedTracksList;
-        private IAirspace _airspace;
 
-        public Filter(IAirspace airspace, IParser parser)
+        public Filter(IParser parser)
         {
             UpdatedTracksList = new List<Track>();
-            _airspace = airspace;
             parser.TracksChanged += FilterTrack;
         }
 
@@ -31,7 +31,9 @@ namespace ATM
             List<Track> newFilteredTracks = new List<Track>();
             foreach (var track in args.Tracks)
             {
-                if (_airspace.IsTrackInAirspace(track))
+                var newEvent = new IsTrackInAirspaceEventArgs(track);
+                IsTrackInAirspace?.Invoke(this, newEvent);
+                if (newEvent.IsInAirspace)
                 {
                     newFilteredTracks.Add(track);
                 }
@@ -42,8 +44,6 @@ namespace ATM
                     {
                         if (track.Tag == trackInUpdatedList.Tag)
                         {
-                            //Kald “Track Left Airspace”- event her
-                            //FilteredTracksList.Remove(trackInFilList);
                             TrackLeft?.Invoke(this, new TrackLeftAirspaceEventArgs(track));
                             break;
                         }

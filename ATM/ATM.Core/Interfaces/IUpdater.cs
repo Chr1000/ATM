@@ -63,6 +63,8 @@ namespace ATM.Interfaces
 
         public Track NewTrack { get; set; }
 
+        public Track CalculatedTrack { get; set; }
+
         public TrackStartCalEventArgs(Track prevTrack, Track newTrack)
         {
             PrevTrack = prevTrack;

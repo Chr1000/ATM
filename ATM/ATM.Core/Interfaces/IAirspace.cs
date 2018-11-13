@@ -8,6 +8,5 @@ namespace ATM.Interfaces
 {
     public interface IAirspace
     {
-        bool IsTrackInAirspace(Track track);
     }
 }

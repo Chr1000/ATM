@@ -12,30 +12,28 @@ namespace ATM
     {
         private IOutput _output;
         
-        public Render(IUpdater updater, IOutput output, ISeperationChecker checker)
+        public Render(IUpdater updater)
         {
-            _output = output;
             updater.TracksUpdated += RenderTracks;
-            //checker.SeperationAlert += RaisSeperationAlert;
-            updater.TrackEntered += RaiseTrackEnteredEvent;
-            updater.TrackLefted += RaiseTrackLeftedEvent;
-            checker.SeperationAlert += RaiseSeperationAlertEvent;
-
         }
+
+        public event EventHandler<WriteLineEventArgs> WriteLine;
+        public event EventHandler<EventArgs> Clear;
 
         private void RenderTracks(object o, TracksUpdatedEventArgs args)
         {
-            _output.Clear();
-            _output.WriteLine("---------------------------------------------------------TRACKS--------------------------------------------------------");
+            Clear?.Invoke(this, EventArgs.Empty);
+            WriteLine?.Invoke(this, new WriteLineEventArgs("---------------------------------------------------------TRACKS--------------------------------------------------------"));
+            //
             foreach (var track in args.UpdatedTracks)
             {
                 RenderTrack(track);
             }
             for (int i = 0; i < 10 - args.UpdatedTracks.Count; i++)
             {
-                _output.WriteLine("");
+                WriteLine?.Invoke(this, new WriteLineEventArgs(""));
             }
-            _output.WriteLine("---------------------------------------------------------EVENTS--------------------------------------------------------");
+            WriteLine?.Invoke(this, new WriteLineEventArgs("---------------------------------------------------------EVENTS--------------------------------------------------------"));
             if (args.EventsList.Count > 0)
             {
                 foreach (var events in args.EventsList)
@@ -44,40 +42,19 @@ namespace ATM
                     {
                         break;
                     }
-                    _output.WriteLine("                          " + events.Print());
+                    WriteLine?.Invoke(this, new WriteLineEventArgs("                          " + events.Print()));
                 }
             }
             for (int i = 0; i < 10 - args.EventsList.Count; i++)
             {
-                _output.WriteLine("");
+                WriteLine?.Invoke(this, new WriteLineEventArgs(""));
             }
-            _output.WriteLine(DateTime.Now.ToString("dd-MMM-yyyy - HH':'mm") + " ---------------------------- FLIGHTS in airspace " + args.UpdatedTracks.Count +" ------------------------------------------------");
-        }
-
-        //private void RaisSeperationAlert(object o, SeperationAlertEventArgs args)
-        //{
-        //    string seperationEvent = "SEPERATION EVENT! " + args.ConflictingTrack1.Tag + " and " + args.ConflictingTrack2.Tag + " are conflicting. " + DateTime.Now.ToString("h:mm:ss tt");
-        //    EventList.Add(seperationEvent);
-        //}
-
-        private void RaiseTrackEnteredEvent(object o, TrackEnteredAirspaceEventArgs args)
-        {
-
-        }
-
-        private void RaiseTrackLeftedEvent(object o, TrackLeftedAirspaceEventArgs args)
-        {
-
-        }
-
-        private void RaiseSeperationAlertEvent(object o, SeperationAlertEventArgs args)
-        {
-
+            WriteLine?.Invoke(this, new WriteLineEventArgs(DateTime.Now.ToString("dd-MMM-yyyy - HH':'mm") + " ---------------------------- FLIGHTS in airspace " + args.UpdatedTracks.Count + " ------------------------------------------------"));
         }
 
         private void RenderTrack(Track track)
         {
-            _output.WriteLine("Tag: " + track.Tag + ", X: " + track.X + ", Y: " + track.Y + ", Altitude: " + track.Altitude + ", Velocity: " + track.Velocity + ", Course: " + track.Course);
+            WriteLine?.Invoke(this, new WriteLineEventArgs("Tag: " + track.Tag + ", X: " + track.X + ", Y: " + track.Y + ", Altitude: " + track.Altitude + ", Velocity: " + track.Velocity + ", Course: " + track.Course));
         }
     }
 }
