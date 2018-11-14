@@ -16,7 +16,7 @@ namespace ATM
         public int lowerAlt { get; set; }
         public int upperAlt { get; set; }
 
-        public Airspace(Filter filter)
+        public Airspace(IFilter filter)
         {
             SWCornerY = 10000;
             SWCornerX = 10000;
