@@ -38,14 +38,16 @@ namespace ATM.Test.Unit
             };
         }
   
-        [Test]
-        public void Initial_TrackStartCalcOneTrack_VelocityAndCourseIsCorrect()
+        [TestCase(25000, 25000, 25010, 25010, 7.0710678118654755, 45)]
+        [TestCase(45000, 15000, 45050, 15010, 25.495097567963924, 78.690067525979785)]
+        [TestCase(50100, 20000, 50050, 19945, 37.165171868296262, 222.27368900609375)]
+        public void Initial_TrackStartCalcOneTrack_VelocityAndCourseIsCorrect(int t1x, int t1y, int t2x, int t2y, double result1, double result2)
         {
             Track prevtrack = new Track()
             {
                 Tag = "NIC222",
-                X = 25000,
-                Y = 25000,
+                X = t1x,
+                Y = t1y,
                 Altitude = 5000,
                 TimeStamp = DateTime.ParseExact("20151006213456789", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture)
             };
@@ -54,16 +56,16 @@ namespace ATM.Test.Unit
             Track newTrack = new Track()
             {
                 Tag = "NIC222",
-                X = 25010,
-                Y = 25010,
+                X = t2x,
+                Y = t2y,
                 Altitude = 5000,
                 TimeStamp = DateTime.ParseExact("20151006213458789", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture)
             };
             TrackStartCalEventArgs args = new TrackStartCalEventArgs(prevtrack, newTrack);
             _updater.TrackStartCal += Raise.EventWith(this, args);
 
-            Assert.That(_calculatedTrack.Velocity, Is.EqualTo(7.0710678118654755));
-            Assert.That(_calculatedTrack.Course, Is.EqualTo(45));
+            Assert.That(_calculatedTrack.Velocity, Is.EqualTo(result1));
+            Assert.That(_calculatedTrack.Course, Is.EqualTo(result2));
         }
     }
 }

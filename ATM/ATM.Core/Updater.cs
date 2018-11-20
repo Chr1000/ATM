@@ -77,9 +77,12 @@ namespace ATM
                             UpdatedTracksList[UpdatedTracksList.IndexOf(updatedTrack)],
                             filteredTrack);
                         TrackStartCal?.Invoke(this, newCalEvent);
-                        filteredTrack.Course = newCalEvent.CalculatedTrack.Course;
-                        filteredTrack.Velocity = newCalEvent.CalculatedTrack.Velocity;
-                        UpdatedTracksList[UpdatedTracksList.IndexOf(updatedTrack)] = filteredTrack;
+                        if (newCalEvent.CalculatedTrack != null)
+                        {
+                            filteredTrack.Course = newCalEvent.CalculatedTrack.Course;
+                            filteredTrack.Velocity = newCalEvent.CalculatedTrack.Velocity;
+                            UpdatedTracksList[UpdatedTracksList.IndexOf(updatedTrack)] = filteredTrack;
+                        }
 
                         SeperationChecker?.Invoke(this, new SeperationCheckerEventArgs(EventsList, UpdatedTracksList, filteredTrack));
                     }

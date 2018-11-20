@@ -71,15 +71,25 @@ namespace ATM.Test.Unit
         }
 
         [Test]
-        public void Initial_TracksFilteredOneTrack_TrackIsCorrect()
+        [TestCase(10000, 10000, 20000, true)]
+        [TestCase(40000, 40000, 20000, true)]
+        [TestCase(50000, 50000, 500, true)]
+        [TestCase(90000, 90000, 500, true)]
+        //X too low
+        [TestCase(9999, 90000, 20000, false)]
+        //Y too low
+        [TestCase(10000, 9999, 500, false)]
+        //X and Y too low
+        [TestCase(9999, 9999, 500, false)]
+        public void Initial_TracksFilteredOneTrack_TrackIsCorrect(int x, int y, int alt, bool result)
         {
             List<Track> listToTest = new List<Track>();
             Track track = new Track()
             {
                 Tag = "NIC111",
-                X = 25000,
-                Y = 25000,
-                Altitude = 5000,
+                X = x,
+                Y = y,
+                Altitude = alt,
                 TimeStamp = DateTime.ParseExact("20151006213456789", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture)
 
             };
@@ -87,7 +97,7 @@ namespace ATM.Test.Unit
             TracksChangedEventArgs args = new TracksChangedEventArgs(listToTest);
             _parser.TracksChanged += Raise.EventWith(args);
 
-            Assert.That(_tracksFilteredList[0], Is.EqualTo(track));
+            Assert.That(_tracksFilteredList.Contains(track), Is.EqualTo(result));
         }
 
         [Test]

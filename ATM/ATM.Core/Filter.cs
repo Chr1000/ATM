@@ -39,7 +39,6 @@ namespace ATM
                 }
                 else
                 {
-                    
                     foreach (var trackInUpdatedList in UpdatedTracksList )
                     {
                         if (track.Tag == trackInUpdatedList.Tag)
