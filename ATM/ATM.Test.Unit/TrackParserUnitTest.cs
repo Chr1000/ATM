@@ -38,28 +38,28 @@ namespace ATM.Test.Unit
         public void TrackParserTestOfX_XIsCorrect()
         {
             int correctX = 12345;
-            NUnit.Framework.Assert.That(receivedTrackData[0].Tag, Is.EqualTo(correctX));
+            NUnit.Framework.Assert.That(receivedTrackData[0].X, Is.EqualTo(correctX));
         }
 
         [Test]
         public void TrackParserTestOfY_YIsCorrect()
         {
             int correctY = 67890;
-            NUnit.Framework.Assert.That(receivedTrackData[0].Tag, Is.EqualTo(correctY));
+            NUnit.Framework.Assert.That(receivedTrackData[0].Y, Is.EqualTo(correctY));
         }
 
         [Test]
         public void TrackParserTestOfAtlitude_AltitudeIsCorrect()
         {
             int correctAltitude = 10000;
-            NUnit.Framework.Assert.That(receivedTrackData[0].Tag, Is.EqualTo(correctAltitude));
+            NUnit.Framework.Assert.That(receivedTrackData[0].Altitude, Is.EqualTo(correctAltitude));
         }
 
         [Test]
         public void TrackParserTestOfTimeStamp_TimeStampIsCorrect()
         {
             DateTime correctTimeStamp = DateTime.ParseExact("20181004123456789", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture);
-            NUnit.Framework.Assert.That(receivedTrackData[0].Tag, Is.EqualTo(correctTimeStamp));
+            NUnit.Framework.Assert.That(receivedTrackData[0].TimeStamp, Is.EqualTo(correctTimeStamp));
         }
 
 
