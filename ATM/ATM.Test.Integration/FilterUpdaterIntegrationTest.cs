@@ -14,7 +14,7 @@ using System.Threading;
 namespace ATM.Test.Integration
 {
     /// <summary>
-    /// Summary description for FilterUpdaterIntegrationTest
+    /// Summary description for UpdaterSeperationCheckerIntegrationTest
     /// </summary>
     [TestFixture]
     public class FilterUpdaterIntegrationTest
