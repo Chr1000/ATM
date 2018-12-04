@@ -66,7 +66,7 @@ namespace ATM
             }
         }
 
-        private Track ReadTrackData(string trackData)
+        public Track ReadTrackData(string trackData)
         {
             string[] seperatedStrings = trackData.Split(';');
 
