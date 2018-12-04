@@ -62,32 +62,34 @@ namespace ATM.Core
                 }
             }
 
-            bool CheckForSeparation(Track t1, Track t2)
+
+        }
+        public bool CheckForSeparation(Track t1, Track t2)
+        {
+            int _altDiff = Math.Abs(t1.Altitude - t2.Altitude);
+
+            if (_altDiff <= 300)
             {
-                int _altDiff = Math.Abs(t1.Altitude - t2.Altitude);
 
-                if (_altDiff <= 300)
+                int xDiff = Math.Abs(t1.X - t2.X);
+                int yDiff = Math.Abs(t1.Y - t2.Y);
+                int horizontalDist = Convert.ToInt32(Math.Sqrt(Math.Pow(xDiff, 2) + Math.Pow(yDiff, 2)));
+
+                if (horizontalDist < 5000)
                 {
-
-                    int _xDiff = Math.Abs(t1.X - t2.X);
-                    int _yDiff = Math.Abs(t1.Y - t2.Y);
-                    int _horizontalDist = Convert.ToInt32(Math.Sqrt(Math.Pow(_xDiff, 2) + Math.Pow(_yDiff, 2)));
-
-                    if (_horizontalDist < 5000)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    return true;
                 }
                 else
                 {
                     return false;
                 }
             }
+            else
+            {
+                return false;
+            }
         }
+
     }
 
 
