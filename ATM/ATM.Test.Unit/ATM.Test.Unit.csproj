@@ -69,8 +69,10 @@
   <ItemGroup>
     <Compile Include="CalculatorUnitTest.cs" />
     <Compile Include="FakeTransponderReciever.cs" />
+    <Compile Include="FakeUpdater.cs" />
     <Compile Include="FilterUnitTest.cs" />
     <Compile Include="RenderUnitTest.cs" />
+    <Compile Include="SeperationCheckerUnitTest.cs" />
     <Compile Include="TrackParserUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AirSpaceUnitTest.cs" />
