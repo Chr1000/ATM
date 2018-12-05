@@ -75,8 +75,8 @@ namespace ATM.Test.Integration
 
             _updater.SeperationChecker += Raise.EventWith(this, SCEargs);
 
-            Assert.That(_raisedEvent.Track, Is.EqualTo(track2));
-            Assert.That(_raisedEvent.ConflictingTrack, Is.EqualTo(track1));
+            Assert.That(_raisedEvent.Track.Tag, Is.EqualTo(track1.Tag));
+            Assert.That(_raisedEvent.ConflictingTrack.Tag, Is.EqualTo(track2.Tag));
         }
 
         [Test]
@@ -119,8 +119,8 @@ namespace ATM.Test.Integration
 
             _updater.SeperationChecker += Raise.EventWith(this, SCEargs);
 
-            Assert.That(_raisedEvent.Track, Is.EqualTo(track2));
-            Assert.That(_raisedEvent.ConflictingTrack, Is.EqualTo(track1));
+            Assert.That(_raisedEvent.Track.Tag, Is.EqualTo(track1.Tag));
+            Assert.That(_raisedEvent.ConflictingTrack.Tag, Is.EqualTo(track2.Tag));
         }
 
         [Test]
@@ -163,8 +163,8 @@ namespace ATM.Test.Integration
 
             _updater.SeperationChecker += Raise.EventWith(this, SCEargs);
 
-            Assert.That(_raisedEvent.Track, Is.EqualTo(track1));
-            Assert.That(_raisedEvent.ConflictingTrack, Is.EqualTo(track2));
+            Assert.That(_raisedEvent.Track.Tag, Is.EqualTo(track1.Tag));
+            Assert.That(_raisedEvent.ConflictingTrack.Tag, Is.EqualTo(track2.Tag));
         }
     }
 }
