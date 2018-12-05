@@ -29,7 +29,6 @@ namespace ATM.Test.Unit
         }
 
         [Test]
-
         public void SeperationCheckerTest_Of_CheckForSeperation_SeperationDetected()
         {
             track1 = new Track()
@@ -52,6 +51,7 @@ namespace ATM.Test.Unit
             NUnit.Framework.Assert.That(UUT.CheckForSeparation(track1, track2), Is.EqualTo(true));
         }
 
+        [Test]
         public void SeperationCheckerTest_Of_CheckForSeperation_NoSeperationDetected_altDiff()
         {
             track1 = new Track()
@@ -74,6 +74,7 @@ namespace ATM.Test.Unit
             NUnit.Framework.Assert.That(UUT.CheckForSeparation(track1, track2), Is.EqualTo(false));
         }
 
+        [Test]
         public void SeperationCheckerTest_Of_CheckForSeperation_NoSeperationDetected_horizontalDiff()
         {
             track1 = new Track()
